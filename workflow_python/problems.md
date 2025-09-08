@@ -16,3 +16,78 @@ This includes a list of challenges and problems that I encountered and solved.
 there aren't enough ret elements to generate this list. 
 
 **Solution:** A possible solution is to change `joint_pos` to `joint_pos = [ret[1][0],ret[1][1],ret[1][2],ret[1][3],ret[1][4],ret[1][5]]` or `joint_pos=ret[1]` which is consistent with the output of `GetInverseKin()`. This change requires a significant function changes to an install file. In future installs make sure that this is fixed!!!!! I also check against a known home point for the joint conversion and it's correct. 
+
+### This problem continued
+Turns of the problem was not that. But instead the problem was with the formatting of all the function items. In particular it was the followin: 
+
+`error1 = self.robot.MoveL([joint_pos[0],joint_pos[1],joint_pos[2],joint_pos[3],joint_pos[4],joint_pos[5]],[desc_pos[0], desc_pos[1], desc_pos[2], desc_pos[3], desc_pos[4], desc_pos[5]],tool,user,vel,acc,ovl,blendR,[exaxis_pos[0],exaxis_pos[1],exaxis_pos[2],exaxis_pos[3]],blendMode,search,[offset_pos[0],offset_pos[1],offset_pos[2],offset_pos[3],offset_pos[4],offset_pos[5]])`
+
+This was not formatted in the code and it was being read in as one element. But in fact it needs 12! finding the correct formatting was a pain but in the end it worked. 
+
+
+This is the working code 
+
+``def MoveL(self, desc_pos, tool, user, joint_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], vel=20.0, acc=0.0, ovl=100.0,
+              blendR=-1.0, blendMode = 0,exaxis_pos=[0.0, 0.0, 0.0, 0.0], search=0, offset_flag=0,
+              offset_pos=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],config=-1,velAccParamMode=0,overSpeedStrategy=0,speedPercent=10):
+        while self.reconnect_flag:
+            time.sleep(0.1)
+        if self.GetSafetyCode() != 0:
+            return self.GetSafetyCode()
+        desc_pos = list(map(float, desc_pos))
+        tool = int(tool)
+        user = int(user)
+        joint_pos = list(map(float, joint_pos))
+        vel = float(vel)
+        acc = float(acc)
+        ovl = float(ovl)
+        blendR = float(blendR)
+        blendMode = int(blendMode)
+        exaxis_pos = list(map(float, exaxis_pos))
+        search = int(search)
+        offset_flag = int(offset_flag)
+        offset_pos = list(map(float, offset_pos))
+        config = int(config)
+        velAccParamMode = int(velAccParamMode)
+        overSpeedStrategy = int(overSpeedStrategy)
+        speedPercent = int(speedPercent)
+        if (overSpeedStrategy > 0):
+            error = self.robot.JointOverSpeedProtectStart(overSpeedStrategy, speedPercent)
+            if error!=0:
+                return error
+            
+        # print(f'desc_pos={desc_pos}, length = {len(desc_pos)}, type = {type(desc_pos)}')
+        # print(f'joint_pos={joint_pos}, length = {len(joint_pos)}, type = {type(joint_pos)}')
+        if ((joint_pos[0] == 0.0) and (joint_pos[1] == 0.0) and (joint_pos[2] == 0.0) and (joint_pos[3] == 0.0)
+                and (joint_pos[4] == 0.0) and (joint_pos[5] == 0.0)):  # 若未输入参数则调用逆运动学求解
+            # print(f'condition is met!!!!')    
+            ret = self.robot.GetInverseKin(0, desc_pos, config)  # 逆运动学求解
+            if ret[0] == 0:
+                # print(f'ret[0]:{ret[0]},ret[1]:{ret[1]},ret[2]:{ret[2]},ret[3]:{ret[3]},ret[4]:{ret[4]},ret[5]:{ret[5]}') 
+                joint_pos = [ret[1], ret[2], ret[3], ret[4], ret[5], ret[6]]
+                # print(f'joint_pos={joint_pos}, length = {len(joint_pos)}, type = {type(joint_pos)}')
+                # print(f'error condition is NOT met!!!!')
+            else:
+                error1 = ret[0]
+                # print(f'error condition is met!!!!')
+                return error1
+
+        flag = True
+        while flag:
+            try:
+                # print('try flag test')
+                error1 = self.robot.MoveL([joint_pos[0],joint_pos[1],joint_pos[2],joint_pos[3],joint_pos[4],joint_pos[5]],[desc_pos[0], desc_pos[1], desc_pos[2], desc_pos[3], desc_pos[4], desc_pos[5]],tool,user,vel,acc,ovl,blendR,[exaxis_pos[0],exaxis_pos[1],exaxis_pos[2],exaxis_pos[3]],blendMode,search,[offset_pos[0],offset_pos[1],offset_pos[2],offset_pos[3],offset_pos[4],offset_pos[5]])
+                # error1 = self.robot.MoveL([joint_pos[0],joint_pos[1],joint_pos[2],joint_pos[3],joint_pos[4],joint_pos[5], desc_pos[0],desc_pos[1],desc_pos[2],desc_pos[3],desc_pos[4],desc_pos[5], tool, user, vel, acc, ovl, blendR, blendMode, exaxis_pos[0],exaxis_pos[1],exaxis_pos[2],exaxis_pos[3], search,offset_flag, offset_pos[0],offset_pos[1],offset_pos[2],offset_pos[3],offset_pos[4],offset_pos[5],100.0,velAccParamMode])
+                # print(f'error1: {error1}')
+                flag = False
+            except socket.error as e:
+                flag = True
+            # print(f'try flag test and flag={flag}')
+
+
+        if (overSpeedStrategy > 0):
+            error = self.robot.JointOverSpeedProtectEnd()
+            if error!=0:
+                return error
+
+        return error1 ``
