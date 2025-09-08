@@ -10,16 +10,19 @@
   - home_right
 
 - **`bottle_reach_cycle`**  & **`single_bottle_pick_place`**  
+  - single_bottle_rotate45
   - single_bottle_approach
-  - single_bottle_grasp 
+  - single_bottle_grab 
+  - single_bottle2_approach
+  - single_bottle2_grab 
+  - single_bottle3_approach
+  - single_bottle3_grab 
 
 - **`filler_approach`**  
   - filler_under_approach
 
 - **`filler_suction`**  
   - filler_insert
-
-
 
 ## Tests (`protocol_0/`) — Capability Checks
 
@@ -40,6 +43,21 @@ These tests isolate basic capabilities of the robotic arm before moving on to mo
   - Move right (–y) → `home_right`  
   - Return to home (`home`)  
   *Purpose: verifies functionality and small ±1 mm Cartesian movements around start position(`home`)  
+
+- **`gripper_closure`**  
+  - Start at home position (`home`)  
+  - Activate gripper  
+  - Set gripper to **75%** closure 
+  - Set gripper to **25%** closure  
+  - Set gripper to **50%** closure 
+  - Set gripper to **100%** closure 
+  - Open gripper fully  
+  - Deactivate gripper  
+  *Purpose: verify gripper setpoints (25/50/75/100%)
+  - **Notes:**  
+    - Define closure as percentage of travel between `open_width` and `close_width`.  
+    - Identify bottle neck clearance????
+
 
 - **`bottle_reach_cycle`**  
   - Start at home position (`home`)  
