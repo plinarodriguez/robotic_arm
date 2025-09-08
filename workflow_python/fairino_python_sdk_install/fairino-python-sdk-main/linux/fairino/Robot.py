@@ -1027,22 +1027,35 @@ class RPC():
             error = self.robot.JointOverSpeedProtectStart(overSpeedStrategy, speedPercent)
             if error!=0:
                 return error
+            
+        # print(f'desc_pos={desc_pos}, length = {len(desc_pos)}, type = {type(desc_pos)}')
+        # print(f'joint_pos={joint_pos}, length = {len(joint_pos)}, type = {type(joint_pos)}')
         if ((joint_pos[0] == 0.0) and (joint_pos[1] == 0.0) and (joint_pos[2] == 0.0) and (joint_pos[3] == 0.0)
                 and (joint_pos[4] == 0.0) and (joint_pos[5] == 0.0)):  # 若未输入参数则调用逆运动学求解
+            # print(f'condition is met!!!!')    
             ret = self.robot.GetInverseKin(0, desc_pos, config)  # 逆运动学求解
             if ret[0] == 0:
-                joint_pos = ret[1] #[ret[1], ret[2], ret[3], ret[4], ret[5], ret[6]]
+                # print(f'ret[0]:{ret[0]},ret[1]:{ret[1]},ret[2]:{ret[2]},ret[3]:{ret[3]},ret[4]:{ret[4]},ret[5]:{ret[5]}') 
+                joint_pos = [ret[1], ret[2], ret[3], ret[4], ret[5], ret[6]]
+                # print(f'joint_pos={joint_pos}, length = {len(joint_pos)}, type = {type(joint_pos)}')
+                # print(f'error condition is NOT met!!!!')
             else:
                 error1 = ret[0]
+                # print(f'error condition is met!!!!')
                 return error1
 
         flag = True
         while flag:
             try:
-                error1 = self.robot.MoveL([joint_pos[0],joint_pos[1],joint_pos[2],joint_pos[3],joint_pos[4],joint_pos[5], desc_pos[0],desc_pos[1],desc_pos[2],desc_pos[3],desc_pos[4],desc_pos[5], tool, user, vel, acc, ovl, blendR, blendMode, exaxis_pos[0],exaxis_pos[1],exaxis_pos[2],exaxis_pos[3], search,offset_flag, offset_pos[0],offset_pos[1],offset_pos[2],offset_pos[3],offset_pos[4],offset_pos[5],100.0,velAccParamMode])
+                # print('try flag test')
+                error1 = self.robot.MoveL([joint_pos[0],joint_pos[1],joint_pos[2],joint_pos[3],joint_pos[4],joint_pos[5]],[desc_pos[0], desc_pos[1], desc_pos[2], desc_pos[3], desc_pos[4], desc_pos[5]],tool,user,vel,acc,ovl,blendR,[exaxis_pos[0],exaxis_pos[1],exaxis_pos[2],exaxis_pos[3]],blendMode,search,[offset_pos[0],offset_pos[1],offset_pos[2],offset_pos[3],offset_pos[4],offset_pos[5]])
+                # error1 = self.robot.MoveL([joint_pos[0],joint_pos[1],joint_pos[2],joint_pos[3],joint_pos[4],joint_pos[5], desc_pos[0],desc_pos[1],desc_pos[2],desc_pos[3],desc_pos[4],desc_pos[5], tool, user, vel, acc, ovl, blendR, blendMode, exaxis_pos[0],exaxis_pos[1],exaxis_pos[2],exaxis_pos[3], search,offset_flag, offset_pos[0],offset_pos[1],offset_pos[2],offset_pos[3],offset_pos[4],offset_pos[5],100.0,velAccParamMode])
+                # print(f'error1: {error1}')
                 flag = False
             except socket.error as e:
                 flag = True
+            # print(f'try flag test and flag={flag}')
+
 
         if (overSpeedStrategy > 0):
             error = self.robot.JointOverSpeedProtectEnd()
