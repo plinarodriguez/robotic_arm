@@ -1,0 +1,23 @@
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# Shell scripts you don’t want in git
+workflow_python/environment_setup_v1.sh
+
+# Virtual environments
+workflow_python/fairino_env/
+workflow_python/fairino_python_sdk_install/fairino_env/
+
+# Fairino SDK build & platform-specific binaries
+workflow_python/fairino_python_sdk_install/fairino-python-sdk-main/linux/example/
+workflow_python/fairino_python_sdk_install/fairino-python-sdk-main/linux/fairino/build/
+workflow_python/fairino_python_sdk_install/fairino-python-sdk-main/linux/libfairino/*.so
+workflow_python/fairino_python_sdk_install/fairino-python-sdk-main/windows/
+
+# Protocol examples you don’t want to track
+workflow_python/protocols/example_install/
+
+# Catch all hidden files in protocols
+workflow_python/protocols/**/.DS_Store
+

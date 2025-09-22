@@ -26,8 +26,10 @@ blendT = 0.0
 blendR = 0.0
 flag = 0
 search = 0
-robot.SetSpeed(10) #20)
+speed = 0 
 
+# set the mspeed 
+robot.SetSpeed(speed) #20)
 
 # Move to Home Position 
 rtn = robot.MoveL(desc_pos=desc_initial, tool=tool, user=user, vel=vel, blendR=blendR)
