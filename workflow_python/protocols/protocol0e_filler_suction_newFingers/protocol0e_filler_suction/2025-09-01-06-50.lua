@@ -1,0 +1,25 @@
+loop1 = 0 
+while (loop1 < 3) do
+Lin(home_initial,75,-1,0,0)
+Lin(single_bottle_rotate45,25,-1,0,0)
+ActGripper(1,1)
+MoveGripper(1,38,75,17,5000,0,0,0,0,0)
+Lin(single_bottle_approach,75,-1,0,0)
+Lin(single_bottle_grab_mid,50,-1,0,0)
+MoveGripper(1,25,75,17,5000,0,0,0,0,0)
+Lin(single_bottle_approach,50,-1,0,0)
+Lin(filler_under_approach,75,-1,0,0)
+Lin(filler_edge,50,-1,0,0)
+Lin(filler_insert,25,-1,0,0)
+WaitMs(3000)
+Lin(filler_edge,50,-1,0,0)
+Lin(filler_under_approach,50,-1,0,0)
+Lin(single_bottle_approach,75,-1,0,0)
+Lin(single_bottle_grab_mid,50,-1,0,0)
+MoveGripper(1,27,75,17,5000,0,0,0,0,0)
+Lin(single_bottle_approach,50,-1,0,0)
+Lin(home_initial,75,-1,0,0)
+MoveGripper(1,100,75,17,5000,0,0,0,0,0)
+ActGripper(1,0)
+loop1 = loop1 + 1
+end
