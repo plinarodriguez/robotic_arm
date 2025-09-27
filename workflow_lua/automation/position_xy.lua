@@ -3,7 +3,7 @@
 -- Required files 
 local F = require('movements') -- movement functions file
 local P = require('points')   -- points
-local Params = require('params')
+local Par = require('params')
 
 -- order = 1 -- for test this will help print results
 print(Params.OPEN) -- Test params.lua
@@ -12,7 +12,7 @@ P.home()
 print(name)
 -- indices for bottle position count
 r,c = 1,1 -- start at row 1 
-x,y = Params.x,Params.y
+x,y,z = Params.x,Params.y,Params.z,Params.rx,Params.ry,Params.rz
 --  Repeat for rows 1 through 8
 while r <= Params.rows do 
     --[[This is where the tasks will go to be performed with the current x,y position]]

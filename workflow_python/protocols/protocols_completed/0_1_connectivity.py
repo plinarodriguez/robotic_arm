@@ -24,4 +24,20 @@ time.sleep(1)
 ret = robot.Mode(1) #Robot cut to manual mode
 print("Robot cut to manual mode", ret)
 
+
+# Show all callable methods that start with "Get"
+#methods = [m for m in dir(robot) if m.startswith('Get') and callable(getattr(robot, m))]
+#for m in methods:
+#    print(m)
+
+
+if hasattr(robot, "ClearAlarm"):
+    print("Clearing alarms…")
+    robot.ClearAlarm()
+    print("Safety code after ClearAlarm:", robot.GetSafetyCode())
+
+print("ping")
+print("pong")
+
+
 robot.CloseRPC()

@@ -24,3 +24,4 @@ print(f'x_diff_b13 = {x_diff_b13/2}')
 print(f'y_diff_b12 = {y_diff_b12}')
 print(f'y_diff_b23 = {y_diff_b23}')
 print(f'y_diff_b13 = {y_diff_b13}')
+
