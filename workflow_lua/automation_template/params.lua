@@ -39,8 +39,8 @@ local Par = {
     filler_wait = 3000,
 
     -- Number of columns and rows
-    cols = 6,
-    rows = 8,
+    cols = 6, 
+    rows = 1, -- 2, 8,
 
     -- Gripper config
 
