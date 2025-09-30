@@ -1,14 +1,2 @@
-okay i basically agree with you for the main.lua file. WHat I want to know is how to create a testing steps. For example 
-1) upload lua files to gui interface
-2) Test read in files are read in 
-3) test startup only 
-4) test single bottle 
-- test functions incrementally 
-5) test whole row 
-- test functions incrementally 
-6) test 2 rows 
-- test functions incrementally 
-7) test whole tray 
-- test functions incrementally 
+Notes 09/26/2025
 
-maybe this could be created by different main.lua files for different tests?
