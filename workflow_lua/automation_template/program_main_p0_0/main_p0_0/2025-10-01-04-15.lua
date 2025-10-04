@@ -147,16 +147,14 @@ end
 -- Build MoveL varargs from a unified point table
 -- Note: supports either p.speed or p.vel (falls back to vel if speed missing)
 function F.moveL_point(p)
-    return(p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,
-    p.x, p.y, p.z, p.rx, p.ry, p.rz,
-    p.toolnum, p.workpiecenum,
-    p.speed, p.acc, p.ovl,
-    p.ep1, p.ep2, p.ep3, p.ep4,
-    p.blendR,
-    p.search,
-    p.offset,
-    p.offset_x, p.offset_y, p.offset_z,
-    p.offset_rx, p.offset_ry, p.offset_rz)
+    return{p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,
+        p.x, p.y, p.z, p.rx, p.ry, p.rz,
+        p.toolnum, p.workpiecenum,
+        p.speed, p.acc, p.ovl,
+        p.ep1, p.ep2, p.ep3, p.ep4,
+        p.blendR,p.search,p.offset,
+        p.offset_x, p.offset_y, p.offset_z,
+        p.offset_rx, p.offset_ry, p.offset_rz}
 end
 
 -- Convenience: MoveL with a unified point

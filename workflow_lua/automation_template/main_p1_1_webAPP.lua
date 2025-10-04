@@ -61,32 +61,32 @@ local par = {
 
   -- Set the starting position (mm / deg)
   bottleStartxyz = {
-    x = 140.0,
-    y = -288.71,
+    x = 141,
+    y = -304.5,
     z = 220, -- this has to stay about here for clearance when picking up bottles
-    rx = -174.686,
-    ry = 47.490,
-    rz = 76.382,
+    rx = -174.18,
+    ry = 45.0,
+    rz = 93.394,
   },
 
   -- Default motion parameters for bottle moves
   bottle_params = {
-    tool = 0,
-    user = 0,
-    vel = 20.0,   -- SDKs usually call this "vel"; change to speed if your wrapper needs it
-    acc = 20.0,
-    ovl = 1.0,
-    ep1 = 0, ep2 = 0, ep3 = 0, ep4 = 0,
-    blendR = -1.0,   -- -1: no blending (safer)
-    search = 0,
-    offset = 0,
-    offset_x = 0, offset_y = 0, offset_z = 0,
-    offset_rx = 0, offset_ry = 0, offset_rz = 0,
-  },
+        toolnum = 0,
+        workpiecenum = 0,
+        speed = 40.0,   -- percent
+        acc = 40.0,
+        ovl = 50.0,
+        ep1 = 0, ep2 = 0, ep3 = 0, ep4 = 0,
+        blendR = -1,    -- no blending
+        search = 0,
+        offset = 0,
+        offset_x = 0, offset_y = 0, offset_z = 0,
+        offset_rx = 0, offset_ry = 0, offset_rz = 0,
+},
 
   -- Z levels for the same XY
   bottle_approach_z = 220,
-  bottle_grab_z = 220, -- this is not correct yet
+  bottle_grab_z = 145, -- eventually it will be 136
 
   -- Spacing between bottles (mm)
   spacing = {
@@ -112,6 +112,42 @@ local par = {
 -- functions.lua (inline or required)
 local F = {}
 
+local unpack = table.unpack or unpack
+
+
+
+-- Require that a table has certain non-nil keys; raises a clear error if not.
+local function require_keys(t, keys, where)
+  for i = 1, #keys do
+    local k = keys[i]
+    -- if t[k] == nil then
+    --   error((where or "table") .. " missing key: '" .. k .. "'")
+    -- end
+  end
+end
+
+-- EXACT MoveL signature from the manual. No unpack, no aliasing.
+-- IMPORTANT: Define this BEFORE any function that calls moveL_point.
+function moveL_point(p)
+  -- Ensure all fields exist before calling MoveL (this makes the error message readable in the GUI)
+  require_keys(p, {'j1','j2','j3','j4','j5','j6','x','y','z','rx','ry','rz',
+                   'toolnum','workpiecenum','speed','acc','ovl','ep1','ep2','ep3','ep4',
+                   'blendR','search','offset','offset_x','offset_y','offset_z','offset_rx','offset_ry','offset_rz'},
+                   "moveL_point() arg")
+
+  return MoveL(
+    p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,
+    p.x,  p.y,  p.z,  p.rx, p.ry, p.rz,
+    p.toolnum, p.workpiecenum,
+    p.speed, p.acc, p.ovl,
+    p.ep1, p.ep2, p.ep3, p.ep4,
+    p.blendR,
+    p.search,
+    p.offset,
+    p.offset_x, p.offset_y, p.offset_z,
+    p.offset_rx, p.offset_ry, p.offset_rz
+  )
+end
 -- shallow copy
 local function copy_table(t)
   local out = {}
@@ -120,6 +156,11 @@ local function copy_table(t)
   end
   return out
 end
+
+
+
+
+
 
 -- shallow merge: source -> destination
 local function merge(destination, source)
@@ -146,21 +187,26 @@ end
 
 -- Build MoveL varargs from a unified point table
 -- Note: supports either p.speed or p.vel (falls back to vel if speed missing)
-function F.moveL_point(p)
-    return{p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,
-        p.x, p.y, p.z, p.rx, p.ry, p.rz,
-        p.toolnum, p.workpiecenum,
-        p.speed, p.acc, p.ovl,
-        p.ep1, p.ep2, p.ep3, p.ep4,
-        p.blendR,p.search,p.offset,
-        p.offset_x, p.offset_y, p.offset_z,
-        p.offset_rx, p.offset_ry, p.offset_rz}
-end
+-- function F.moveL_point(p)
+--   return MoveL(
+--     p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,         -- 1..6 joints
+--     p.x,  p.y,  p.z,  p.rx, p.ry, p.rz,         -- 7..12 cartesian
+--     p.toolnum, p.workpiecenum,                  -- 13..14
+--     p.speed, p.acc, p.ovl,                      -- 15..17
+--     p.ep1, p.ep2, p.ep3, p.ep4,                 -- 18..21
+--     p.blendR,                                   -- 22
+--     p.search,                                   -- 23
+--     p.offset,                                   -- 24
+--     p.offset_x, p.offset_y, p.offset_z,         -- 25..27
+--     p.offset_rx, p.offset_ry, p.offset_rz       -- 28..30
+--   )
+-- end
 
 -- Convenience: MoveL with a unified point
-function F.MoveL_from_point(p)
-  return MoveL(F.moveL_point(p))
-end
+-- function F.MoveL_from_point(p)
+-- --   return MoveL(F.moveL_point(p))
+--   return MoveL(unpack(F.moveL_point(p)))
+-- end
 
 -- ── High-level routines ─────────────────────────────────────────────
 
@@ -175,10 +221,10 @@ end
 
 -- Approach bottle, grab, lift
 function F.bottle_approach_grab(bottle_approach, bottle_grab)
-    F.MoveL_from_point(bottle_approach)
-    F.MoveL_from_point(bottle_grab)
+    moveL_point(bottle_approach)
+    moveL_point(bottle_grab)
     MoveGripper(1, 4, 25, 17, 5000, 0, 0, 0, 0, 0)
-    F.MoveL_from_point(bottle_approach)
+    moveL_point(bottle_approach)
 end
 
 function F.filler(filler_under_approach, filler_edge, filler_insert, filler_wait_ms)
@@ -191,10 +237,10 @@ function F.filler(filler_under_approach, filler_edge, filler_insert, filler_wait
 end
 
 function F.bottle_return_release(bottle_approach, bottle_grab)
-  F.MoveL_from_point(bottle_approach)
-  F.MoveL_from_point(bottle_grab)
-  MoveGripper(1, 27, 25, 17, 5000, 0, 0, 0, 0, 0) -- open
-  F.MoveL_from_point(bottle_approach)
+    moveL_point(bottle_approach)
+    moveL_point(bottle_grab)
+    MoveGripper(1, 27, 25, 17, 5000, 0, 0, 0, 0, 0)
+    moveL_point(bottle_approach)
 end
 
 function F.shutdown(home_initial)
@@ -245,10 +291,11 @@ while r <= rows do
     -- Create points for MoveL function
     local bottle_approach = F.createPoint(xyz_a,joints_a,par.bottle_params)
     local bottle_grab     = F.createPoint(xyz_g,joints_g,par.bottle_params)
-
+    
     ------------------ Execute: approach & grab → filler protocol → return & release
     -- Approach & Grab Bottle
     F.bottle_approach_grab(bottle_approach,bottle_grab)
+    F.bottle_return_release(bottle_approach,bottle_grab)
 
     -- io.write(string.format("(%d,%d) -> step %d\n", r, c, order))  -- for test this will help print results
     -- order = order + 1  -- for test this will help print results  

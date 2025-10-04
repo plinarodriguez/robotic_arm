@@ -61,12 +61,12 @@ local par = {
 
   -- Set the starting position (mm / deg)
   bottleStartxyz = {
-    x = 101.498,
-    y = -288.711,
-    z = 135.0,
-    rx = -179.124,
-    ry = 78.208,
-    rz = 90.446,
+    x = 140.0,
+    y = -288.71,
+    z = 220, -- this has to stay about here for clearance when picking up bottles
+    rx = -174.686,
+    ry = 47.490,
+    rz = 76.382,
   },
 
   -- Default motion parameters for bottle moves
@@ -85,8 +85,8 @@ local par = {
   },
 
   -- Z levels for the same XY
-  bottle_approach_z = 135.0,
-  bottle_grab_z = 67.883,
+  bottle_approach_z = 220,
+  bottle_grab_z = 220, -- this is not correct yet
 
   -- Spacing between bottles (mm)
   spacing = {
@@ -147,16 +147,14 @@ end
 -- Build MoveL varargs from a unified point table
 -- Note: supports either p.speed or p.vel (falls back to vel if speed missing)
 function F.moveL_point(p)
-    return(p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,
-    p.x, p.y, p.z, p.rx, p.ry, p.rz,
-    p.toolnum, p.workpiecenum,
-    p.speed, p.acc, p.ovl,
-    p.ep1, p.ep2, p.ep3, p.ep4,
-    p.blendR,
-    p.search,
-    p.offset,
-    p.offset_x, p.offset_y, p.offset_z,
-    p.offset_rx, p.offset_ry, p.offset_rz)
+    return{p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,
+        p.x, p.y, p.z, p.rx, p.ry, p.rz,
+        p.toolnum, p.workpiecenum,
+        p.speed, p.acc, p.ovl,
+        p.ep1, p.ep2, p.ep3, p.ep4,
+        p.blendR,p.search,p.offset,
+        p.offset_x, p.offset_y, p.offset_z,
+        p.offset_rx, p.offset_ry, p.offset_rz}
 end
 
 -- Convenience: MoveL with a unified point
@@ -169,10 +167,10 @@ end
 -- Start at home, rotate, power gripper, open to start gap
 function F.startup(home_initial, home_rotate45)
   -- If your WebApp’s Lin expects a pose table, these are OK:
-  Lin(home_initial, 75, -1, 0, 0)
+  Lin(home_initial, 25, -1, 0, 0)
   Lin(home_rotate45, 25, -1, 0, 0)
   ActGripper(1, 1)
-  MoveGripper(1, 27, 50, 17, 5000, 0, 0, 0, 0, 0)
+  MoveGripper(1, 27, 25, 17, 5000, 0, 0, 0, 0, 0)
 end
 
 -- Approach bottle, grab, lift
@@ -184,12 +182,12 @@ function F.bottle_approach_grab(bottle_approach, bottle_grab)
 end
 
 function F.filler(filler_under_approach, filler_edge, filler_insert, filler_wait_ms)
-  Lin(filler_under_approach, 75, -1, 0, 0)
+  Lin(filler_under_approach, 25, -1, 0, 0)
   Lin(filler_edge, 25, -1, 0, 0)
   Lin(filler_insert, 25, -1, 0, 0)
   WaitMs(filler_wait_ms)           -- ms
-  Lin(filler_edge, 50, -1, 0, 0)
-  Lin(filler_under_approach, 50, -1, 0, 0)
+  Lin(filler_edge, 25, -1, 0, 0)
+  Lin(filler_under_approach, 25, -1, 0, 0)
 end
 
 function F.bottle_return_release(bottle_approach, bottle_grab)
@@ -200,25 +198,77 @@ function F.bottle_return_release(bottle_approach, bottle_grab)
 end
 
 function F.shutdown(home_initial)
-  Lin(home_initial, 75, -1, 0, 0)
-  MoveGripper(1, 100, 75, 17, 5000, 0, 0, 0, 0, 0)
+  Lin(home_initial, 25, -1, 0, 0)
+  MoveGripper(1, 100, 25, 17, 5000, 0, 0, 0, 0, 0)
   ActGripper(1, 0)
 end
+--------------------------------------------------------------
 
-return F
-
----
-
--- Required files doesn't work because directory where main is doesn't have other files so instead we are adding all of this info to this very long file!!!
+-- -- Required files 
 -- local F = require('functions') -- movement functions file
 -- local P = require('points')    -- fixed points & repeated
 -- local par = require('params')  -- parameters
 
-----------------------------------------------------------------
--- Check that the functions are being read in correctly. 
--- Instead testing functionality since other functions will not be used
-print(P.home_initial)
-print(P.home_initial.x)
-print(par.bottleStartxyz)
-print(par.bottleStartxyz.z)
-print(F.convertPoint(par.bottleStartxyz,par.joint_seed))
+------- Startup Commands
+F.startup(P.home_initial,P.home_rotate45)
+
+--- Starting position for bottle position
+local bottle = {
+  x  = par.bottleStartxyz.x,
+  y  = par.bottleStartxyz.y,
+  rx = par.bottleStartxyz.rx,
+  ry = par.bottleStartxyz.ry,
+  rz = par.bottleStartxyz.rz,
+}
+
+-- indices for bottle position count
+r,c = 1,1 -- start at row 1 
+
+--  Single bottle implementation row1 column1 
+rows = 1
+cols = 1
+while r <= rows do 
+    -- Generate x,y,z,rx,ry,rz points
+    local xyz_a = {
+    x=bottle.x, y=bottle.y, z=par.bottle_approach_z,
+    rx=bottle.rx, ry=bottle.ry, rz=bottle.rz
+    } -- approach bottle
+    local xyz_g = {
+    x=bottle.x, y=bottle.y, z=par.bottle_grab_z,
+    rx=bottle.rx, ry=bottle.ry, rz=bottle.rz
+    } -- grab bottle
+    
+    -- Generate joints from x,y,z points
+    local joints_a = F.convertPoint(xyz_a,par.joint_seed)
+    local joints_g = F.convertPoint(xyz_g,par.joint_seed)
+
+    -- Create points for MoveL function
+    local bottle_approach = F.createPoint(xyz_a,joints_a,par.bottle_params)
+    local bottle_grab     = F.createPoint(xyz_g,joints_g,par.bottle_params)
+
+    -- io.write(string.format("(%d,%d) -> step %d\n", r, c, order))  -- for test this will help print results
+    -- order = order + 1  -- for test this will help print results  
+    if r%2 == 1 then -- if we are in an odd row then we move to the right and increment x 
+        if c < cols then 
+            bottle.x = bottle.x + par.spacing.d_x
+            c = c + 1 -- increment to the next column in the same row
+        else
+            bottle.x = bottle.x + par.spacing.d_x_last
+            bottle.y = bottle.y + par.spacing.d_y_last
+            r = r + 1
+            c = par.cols
+        end
+    elseif r%2 == 0 then -- if we are in an even row then we move to the left and decrease x 
+        if c > 1 then 
+            bottle.x = bottle.x - par.spacing.d_x
+            c = c - 1 -- decrease to the next column in the same row
+        else
+            bottle.x = bottle.x - par.spacing.d_x_last
+            bottle.y = bottle.y + par.spacing.d_y_last
+            r = r + 1 
+            c = 1
+        end
+    end 
+end
+
+F.shutdown(P.home_initial)
