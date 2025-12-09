@@ -1,0 +1,77 @@
+start              Col1  Col2  Col3  Col4  Col5  Col6 
+--->
+    Positions:     B1    B2    B3    B4    B5    B6
+    row 1: d_x =   58    58    58    58    58    58     total col =6
+           d_y =   1.5   1.5   1.5   1.5   1.5  1.5
+        Next row:  d_x_last = 29
+                   d_y_last = 16
+
+    Positions:     B7    B8    B9    B10   B11
+    row 2: d_x =   58    58    58    58    58           total col = 5
+           d_y =   1.5   1.5   1.5   1.5   1.5   
+        Next row:  d_x_last = 29
+                   d_y_last = 16    
+
+#### Review the previous rows Row 1-2!!!! Double check because there was a shift in the robot.   
+    
+    Positions:     B12   B13   B14   B15   B16   B17
+    row 3: d_x =                                      total col = 6
+           d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =     
+
+    row 4: d_x =                                      total col = 5
+           d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 5: d_x =                                      total col = 6
+           d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 6: d_x =                                      total col = 5
+           d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 7: d_x =                                      total col = 6
+           d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 8: d_x =                                      total col = 5
+           d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 9: d_x =                                      total col = 6
+           d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+        ##### This is where there was a break and I'm certain of the points after this row 9-16. 
+
+    row 10: d_x =                                     total col = 5
+            d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 11: d_x =                                     total col = 6
+            d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 12: d_x =                                     total col = 5
+            d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 13: d_x =                                     total col = 6
+            d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 14: d_x =                                     total col = 5
+            d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 15: d_x =                                     total col = 6
+            d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+    row 16: d_x =                                     total col = 5
+            d_y =                                   
+        Next row:  d_x_last = 
+                   d_y_last =   
+
