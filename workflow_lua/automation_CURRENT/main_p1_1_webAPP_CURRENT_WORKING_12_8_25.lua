@@ -2,7 +2,7 @@
 --------------------- Points --------------------- 
 --------------------------------------------------
 local P = {
-  -- Home & staging
+  -- Home & startup 
   home_initial = {
     x=99.999, y=-195.001, z=370.661,
     rx=169.561, ry=89.557, rz=76.324,
@@ -21,7 +21,7 @@ local P = {
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
-
+  -- ################ These are for rows 1-15
   -- Filler locations: Under the filler at a safe distance
   filler_under_approach = {
     x=14.997, y=-497.007, z=289.996,
@@ -31,7 +31,6 @@ local P = {
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
-
   -- Filler locations: The edge of the filler nozzle
   filler_edge = {
     x=14.997, y=-497.000, z=313.998,
@@ -41,12 +40,45 @@ local P = {
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
-
   -- Filler locations: The top of the filler nozzle
   filler_insert = {
     x=14.997, y=-497.007, z=339.004,
     rx=173.345, ry=43.638, rz=84.586,
     j1=77.532, j2=-75.817, j3=87.873, j4=35.128, j5=78.510, j6=-95.204,
+    e1=0.000, e2=0.000, e3=0.000, e4=0.000,
+    speed=100, acc=100, elbow_speed=100, elbow_acc=100,
+    toolnum=0, workpiecenum=0,
+  },
+  -- ################ These are for rows 16 (and possibly row 15)
+  -- Filler locations: Under the filler at a safe distance
+  filler_under_approach_row16 = {
+    x=39.0, y=-513.0, z=205.0,
+    rx=173.867, ry=44.703, rz=114.687,
+      -- Need to get these joints!!!!! 
+    j1=77.532, j2=-74.047, j3=92.970, j4=28.268, j5=78.513, j6=-95.205,
+    
+    e1=0.000, e2=0.000, e3=0.000, e4=0.000,
+    speed=100, acc=100, elbow_speed=100, elbow_acc=100,
+    toolnum=0, workpiecenum=0,
+  },
+  -- Filler locations: The edge of the filler nozzle
+  filler_edge_row16 = {
+    x=39.0, y=-513.0, z=310.0,
+    rx=173.867, ry=44.703, rz=114.687,
+      -- Need to get these joints!!!!! 
+    j1=77.532, j2=-75.010, j3=90.577, j4=31.621, j5=78.513, j6=-95.204,
+    
+    e1=0.000, e2=0.000, e3=0.000, e4=0.000,
+    speed=100, acc=100, elbow_speed=100, elbow_acc=100,
+    toolnum=0, workpiecenum=0,
+  },
+  -- Filler locations: The top of the filler nozzle
+  filler_insert_row16 = {
+    x=39.0, y=-513.0, z=330.5,
+    rx=173.867, ry=44.703, rz=114.687,
+      -- Need to get these joints!!!!! 
+    j1=77.532, j2=-75.817, j3=87.873, j4=35.128, j5=78.510, j6=-95.204,
+    
     e1=0.000, e2=0.000, e3=0.000, e4=0.000,
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
@@ -58,16 +90,6 @@ local P = {
 --------------------------------------------------
 -- Inline params (was params.lua)
 local par = {
-
-  -- Set the starting position (mm / deg)
-  bottleStartxyz = {
-    x = 141,
-    y = -304.5,
-    z = 220, -- this has to stay about here for clearance when picking up bottles
-    rx = -174.18,
-    ry = 45.0,
-    rz = 93.394,
-  },
 
   -- Default motion parameters for bottle moves
   bottle_params = {
@@ -82,11 +104,28 @@ local par = {
         offset = 0,
         offset_x = 0, offset_y = 0, offset_z = 0,
         offset_rx = 0, offset_ry = 0, offset_rz = 0,
-},
+      },
 
-  -- Z levels for the same XY
-  bottle_approach_z = 220,
-  bottle_grab_z = 145, -- eventually it will be 136
+  -- Z levels for the same XY for rows 1-15 , maybe start with 220 approach for now 
+  bottle_approach_z = 205,
+  bottle_btw_z = 160,
+  bottle_grab_z = 133.5, 
+
+  -- Z levels for the same XY for rows 16 
+  bottle_approach_z = 205.0,
+  bottle_btw_z = 165.0,  
+  bottle_grab_z = 140.5,
+
+  -- Set the starting position (mm / deg) -> DOUBLE CHECK THIS!!!!
+  bottleStartxyz = {
+    x = 141,
+    y = -304.5,
+    z = 220, -- this has to stay about here for clearance when picking up bottles
+    rx = -174.18,
+    ry = 45.0,
+    rz = 93.394,
+  },
+
 
   -- Spacing between bottles (mm)
   spacing = {
@@ -162,11 +201,6 @@ local function copy_table(t)
   return out
 end
 
-
-
-
-
-
 -- shallow merge: source -> destination
 local function merge(destination, source)
   if source then
@@ -189,31 +223,6 @@ function F.createPoint(xyz, joints, params)
   merge(p, params)         -- tool/user/speed/acc/...
   return p
 end
-
--- Build MoveL varargs from a unified point table
--- Note: supports either p.speed or p.vel (falls back to vel if speed missing)
--- function F.moveL_point(p)
---   return MoveL(
---     p.j1, p.j2, p.j3, p.j4, p.j5, p.j6,         -- 1..6 joints
---     p.x,  p.y,  p.z,  p.rx, p.ry, p.rz,         -- 7..12 cartesian
---     p.toolnum, p.workpiecenum,                  -- 13..14
---     p.speed, p.acc, p.ovl,                      -- 15..17
---     p.ep1, p.ep2, p.ep3, p.ep4,                 -- 18..21
---     p.blendR,                                   -- 22
---     p.search,                                   -- 23
---     p.offset,                                   -- 24
---     p.offset_x, p.offset_y, p.offset_z,         -- 25..27
---     p.offset_rx, p.offset_ry, p.offset_rz       -- 28..30
---   )
--- end
-
--- Convenience: MoveL with a unified point
--- function F.MoveL_from_point(p)
--- --   return MoveL(F.moveL_point(p))
---   return MoveL(unpack(F.moveL_point(p)))
--- end
-
--- ── High-level routines ─────────────────────────────────────────────
 
 -- Start at home, rotate, power gripper, open to start gap
 function F.startup(home_initial, home_rotate45)
@@ -277,9 +286,10 @@ local bottle = {
 -- indices for bottle position count
 r,c = 1,1 -- start at row 1 
 
---  Single bottle implementation row1 column1 
+--  Single bottle implementation row1 column1, start ar row 2 and go to column 6 
 rows = 2
 cols = 6
+
 while r <= rows do 
     -- Generate x,y,z,rx,ry,rz points
     local xyz_a = {

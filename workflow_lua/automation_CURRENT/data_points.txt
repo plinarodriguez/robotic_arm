@@ -1,77 +1,107 @@
+Due Date: Finish this up! specifically the pendant setup to make sure it works. 
+Monday let's discuss how this will work to be able to implemented to get it to start working.  
+This weekend it will be done. To discuss the final things and to go over it on Monday and scheudling 
+Holiday break to prevent an extra person having to use it for now 
+- let's get this done 
+
+get it shipped out by Monday so that it gets sent in time 
+- Thursday or Friday check in with Chuy how it looks almost being done so that it can be picked up in time 
+
+
 start              Col1  Col2  Col3  Col4  Col5  Col6 
 --->
-    Positions:     B1    B2    B3    B4    B5    B6
-    row 1: d_x =   58    58    58    58    58    58     total col =6
-           d_y =   1.5   1.5   1.5   1.5   1.5  1.5
-        Next row:  d_x_last = 29
-                   d_y_last = 16
 
-    Positions:     B7    B8    B9    B10   B11
-    row 2: d_x =   58    58    58    58    58           total col = 5
-           d_y =   1.5   1.5   1.5   1.5   1.5   
-        Next row:  d_x_last = 29
-                   d_y_last = 16    
+    Positions:  B1    B2    B3    B4    B5    B6   NEW_ROW
+    row 1: d_x =   58    58    58    58    58    29   
+           d_y =   1.5   1.5   1.5   1.5   1.5   16 
+           Start Point: x = 137.5 , y = -296.5 
+
+    Positions:  B7    B8    B9    B10   B11   NEW_ROW
+    row 2: d_x =   58    58    58    58     29   
+           d_y =   1.5   1.5   1.5   1.5    16 
+           Start Point: x = -121.0 , y = -296.5 
 
 #### Review the previous rows Row 1-2!!!! Double check because there was a shift in the robot.   
     
-    Positions:     B12   B13   B14   B15   B16   B17
-    row 3: d_x =                                      total col = 6
-           d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =     
+    Positions:  B12   B13   B14    B15   B16   B17   NEW_ROW 
+    row 3: d_x =   57    57.5   57    58    57.5  28.5                            
+           d_y =   0     2      1     1.5   2     17 
+           Start Point: x = 136.5 , y = -330.5 
 
-    row 4: d_x =                                      total col = 5
-           d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 5: d_x =                                      total col = 6
-           d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 6: d_x =                                      total col = 5
-           d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 7: d_x =                                      total col = 6
-           d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 8: d_x =                                      total col = 5
-           d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 9: d_x =                                      total col = 6
-           d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-        ##### This is where there was a break and I'm certain of the points after this row 9-16. 
+    Positions:  B18   B19   B20    B21   B22   NEW_ROW        
+    row 4: d_x =   58    57.5   57    57.5   28 
+           d_y =   1.5   2.5    0.5   1.5    16
+           Start Point: x = -122.0 , y = -341.0     
 
-    row 10: d_x =                                     total col = 5
-            d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 11: d_x =                                     total col = 6
-            d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 12: d_x =                                     total col = 5
-            d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 13: d_x =                                     total col = 6
-            d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 14: d_x =                                     total col = 5
-            d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 15: d_x =                                     total col = 6
-            d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
-    row 16: d_x =                                     total col = 5
-            d_y =                                   
-        Next row:  d_x_last = 
-                   d_y_last =   
+    Positions:  B23   B24    B25    B26   B27    B28   NEW_ROW 
+    row 5: d_x =   56.5   58    57.5   58    57.5  24.5               
+           d_y =   0      1.5   1      1.5   2.0   17 
+           Start Point: x = 136 , y = -363 
+
+    Positions:  B29   B30   B31    B32   B33   NEW_ROW  
+    row 6: d_x =   57.5   57.5  57.5  58    27.5
+           d_y =   2      1.5   0.5   1.5   17 
+           Start Point: x = -123.5 , y = -374.5 
+
+    Positions:  B34   B35    B36    B37   B38    B39   NEW_ROW     
+    row 7: d_x =   56.5   58    57.5   58     57    28.5
+           d_y =   0.5    1     0.5    1      2     17.0
+           Start Point: x = 134.5 , y = -397.0 
+           
+    Positions:  B40   B41   B42    B43   B44   NEW_ROW   
+    row 8: d_x =   57    57.5   58.5  57.5   27.5                                
+           d_y =   2     1.5    1.5   1.5    16.5
+           Start Point: x = -124 , y = -407 
+
+    Positions:  B45   B46    B47    B48   B49    B50   NEW_ROW              
+    row 9: d_x =   56.5   58     58     58    57    28.5                         
+           d_y =   0.5    1      2.5    1     2     17.0   
+           Start Point: x = 134.0 , y = -430 
+
+           
+################ This is where there was a break and I'm certain of the points after this row 9-16. 
+
+    Positions:  B51   B52     B53    B54     B55   NEW_ROW 
+    row 10: d_x =  57    57.5    58.5    57.5   27.5  
+            d_y =  2     1.5     1.5     0.5    17.5 
+           Start Point: x = -125 , y = -440 
+
+    Positions:  B56   B57    B58    B59   B60    B61   NEW_ROW
+    row 11: d_x =  56.5   58    58     57.5   57    28.5
+            d_y =  1.5    2     0.5    1      2     18.0
+           Start Point: x = 133 , y = -463.0 
+
+    Positions:  B62   B63     B64    B65     B66    NEW_ROW 
+    row 12: d_x =  57    57.5    58.5   57.5    27.5
+            d_y =  2     0       1.5    1.5     17.5
+           Start Point: x = -125.5 , y = -474.0 
+
+    Positions:  B67   B68    B69    B70   B71    B72   NEW_ROW
+    row 13: d_x =   56.5   58    58    57.5    57   28.5
+            d_y =   1.5    2     0.5   1       2    18.0
+           Start Point: x = 132.5 , y = -496.5 
+
+    Positions:  B73   B74     B75    B76     B77    NEW_ROW 
+    row 14: d_x =  57.5   57.5   57.5    57.5   27.5                    
+            d_y =  0.5    1.5    1.0     1.5    16.5
+           Start Point: x = -126 , y = -507.5              
+
+
+
+Bottles with interference: B87,B86,B80  (Review position B80 for possible interference, I have additional points with the modified gripper position)
+
+    Positions:  B78   B79    B80*?    B81   B82    B83   NEW_ROW
+    row 15: d_x =  56.5   58    57.5   57.5   57    28.5
+            d_y =  1.5    1     0.5    1      2     18 
+           Start Point: x = 131.5 , y = -528.5 
+
+            Another option for B80*? x = -47 ,y = -549.5  # with new rx,ry,rz positions  
+
+    # For row 16 B86 and B87 need to be skipped or run with the new points so the deltas will be skipped!      
+    Positions:  B84   B85     B86*    B87*     B88    NEW_ROW 
+    row 16: d_x =  55     4       56.47   80.97    
+            d_y =  1.5    24.5    1.75    24.25   
+           Start Point: x = -126.5 , y = -540.5
+           B86* Point: x = -75.5 , y = -566.5
+           B87* Point: x = -19.03, y = -568.25   
 
