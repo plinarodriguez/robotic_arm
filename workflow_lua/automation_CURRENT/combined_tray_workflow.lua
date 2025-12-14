@@ -292,7 +292,13 @@ end
 -- Choose what to run (ONLY ONE will execute):
 --   "ROWS_1_15"  -> run rows 1..15 then home
 --   "ROW_16"     -> run row 16 (with special handling for bottles 86/87)
-local RUN_MODE = "ROWS_1_15"
+--   "ONE_ROW"    -> to test a single row but needs: ROW_TO_RUN,START_COL,END_COL
+local RUN_MODE = "ONE_ROW"
+
+-- For ONE_ROW:
+local ROW_TO_RUN = 3          -- <- set row number here (1..16)
+local START_COL  = 1          -- <- optional
+local END_COL    = nil        -- <- nil means “to end of row”
 
 -- Optional controls
 local DO_FILLER = true
@@ -461,6 +467,13 @@ if RUN_MODE == "ROWS_1_15" then
 
 elseif RUN_MODE == "ROW_16" then
   run_row_16_from_bottle(ROW16_START_BOTTLE_ID)
+  F.shutdown(P.home_initial)
+
+elseif RUN_MODE == "ONE_ROW" then
+  local r = ROW_TO_RUN
+  local ncols = ROWS[r].bottles
+  local endc = END_COL or ncols
+  run_row(r, START_COL, endc)
   F.shutdown(P.home_initial)
 
 else
