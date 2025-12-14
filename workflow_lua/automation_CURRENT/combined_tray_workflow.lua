@@ -307,7 +307,6 @@ local START_COL  = 1          -- <- optional
 local END_COL    = nil        -- <- nil means “to end of row”
 
 -- For multiple rows
-local RUN_MODE = "ROWS_RANGE"
 local ROW_START = 1
 local ROW_END   = 5
 
