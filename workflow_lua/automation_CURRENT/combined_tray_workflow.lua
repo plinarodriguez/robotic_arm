@@ -2,6 +2,8 @@
 --------------------- Points --------------------- 
 --------------------------------------------------
 local P = {
+
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Home & startup 
   home_initial = {
     x=99.999, y=-195.001, z=370.661,
@@ -11,7 +13,7 @@ local P = {
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
-
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Rotate arm 45 degrees to match the finger angle
   home_rotate45 = {
     x=96.327, y=-100.229, z=330.786,
@@ -22,6 +24,7 @@ local P = {
     toolnum=0, workpiecenum=0,
   },
   -- ################ These are for rows 1-15
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Filler locations: Under the filler at a safe distance
   filler_under_approach = {
     x=14.997, y=-497.007, z=289.996,
@@ -31,6 +34,7 @@ local P = {
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Filler locations: The edge of the filler nozzle
   filler_edge = {
     x=14.997, y=-497.000, z=313.998,
@@ -40,6 +44,7 @@ local P = {
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Filler locations: The top of the filler nozzle
   filler_insert = {
     x=14.997, y=-497.007, z=339.004,
@@ -50,41 +55,37 @@ local P = {
     toolnum=0, workpiecenum=0,
   },
   -- ################ These are for rows 16 (and possibly row 15)
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Filler locations: Under the filler at a safe distance
   filler_under_approach_row16 = {
     x=39.0, y=-513.0, z=205.0,
     rx=173.867, ry=44.703, rz=114.687,
-      -- Need to get these joints!!!!! 
-    j1=77.532, j2=-74.047, j3=92.970, j4=28.268, j5=78.513, j6=-95.205,
-    
+    j1=67.435, j2=-62.492, j3=92.444, j4=30.766, j5=54.116, j6=-130.104,    					
     e1=0.000, e2=0.000, e3=0.000, e4=0.000,
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Filler locations: The edge of the filler nozzle
   filler_edge_row16 = {
     x=39.0, y=-513.0, z=310.0,
     rx=173.867, ry=44.703, rz=114.687,
-      -- Need to get these joints!!!!! 
-    j1=77.532, j2=-75.010, j3=90.577, j4=31.621, j5=78.513, j6=-95.204,
-    
+    j1=67.376	,j2=-67.830	,j3=84.587	,j4=43.995	,j5=54.086	,j6=-130.165,
     e1=0.000, e2=0.000, e3=0.000, e4=0.000,
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
+  -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Filler locations: The top of the filler nozzle
   filler_insert_row16 = {
     x=39.0, y=-513.0, z=330.5,
     rx=173.867, ry=44.703, rz=114.687,
-      -- Need to get these joints!!!!! 
-    j1=77.532, j2=-75.817, j3=87.873, j4=35.128, j5=78.510, j6=-95.204,
-    
+    j1=67.376	,j2=-68.568	,j3=82.547	,j4=46.774	,j5=54.087	,j6=-130.166,
     e1=0.000, e2=0.000, e3=0.000, e4=0.000,
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
   },
 }
-
 --------------------------------------------------
 ------------------- Parameters  ------------------ 
 --------------------------------------------------
@@ -95,9 +96,9 @@ local par = {
   bottle_params = {
         toolnum = 0,
         workpiecenum = 0,
-        speed = 40.0,   -- percent
-        acc = 40.0,
-        ovl = 50.0,
+        speed = 15, -- 15-25(Slow), 30-50 (MED), 75.0 (fast might be too fast??)   -- percent
+        acc   = 15, -- 15-25(Slow), 30-50 (MED), 75.0 (fast might be too fast??)
+        ovl   = 30, -- 30(Slow), 50.0 (MED), 80.0 (fast might be too fast??)
         ep1 = 0, ep2 = 0, ep3 = 0, ep4 = 0,
         blendR = -1,    -- no blending
         search = 0,
@@ -106,40 +107,55 @@ local par = {
         offset_rx = 0, offset_ry = 0, offset_rz = 0,
       },
 
-  -- Z levels for the same XY for rows 1-15 , maybe start with 220 approach for now 
-  bottle_approach_z = 205,
-  bottle_btw_z = 160,
-  bottle_grab_z = 133.5, 
+  lin_speed = 10, -- slow=10-15, med=20-30, fast=40-60 
 
-  -- Z levels for the same XY for rows 16 
-  bottle_approach_z = 205.0,
-  bottle_btw_z = 165.0,  
-  bottle_grab_z = 140.5,
+  -- -- Z levels for the same XY for rows 1-15 , maybe start with 220 approach for now --- not being used but double check before delete 
+  -- bottle_approach_z = 205.0,
+  -- bottle_btw_z = 160.0,
+  -- bottle_grab_z = 133.5, 
 
-  -- Set the starting position (mm / deg) -> DOUBLE CHECK THIS!!!!
-  bottleStartxyz = {
-    x = 141,
-    y = -304.5,
-    z = 220, -- this has to stay about here for clearance when picking up bottles
-    rx = -174.18,
-    ry = 45.0,
-    rz = 93.394,
-  },
+  -- Gripper Open & Close 
+  grip_Open = 26, 
+  grip_Close = 15,
 
-  -- Spacing between bottles (mm) this will no longer be necessary!!!!
-  spacing = {
-    d_x = 58,       -- between bottles
-    d_y = 1.5,
-    d_x_last = 29,  -- end of row correction
-    d_y_last = 16,  -- end of row correction (y)
-  },
+--################### This might be off for the first 2 rows##################
+  -- -- Set the starting position (mm / deg) 
+  -- bottleStartxyz = {
+  --   x = 141,
+  --   y = -304.5,
+  --   z = 220, -- this has to stay about here for clearance when picking up bottles
+  --   rx = -174.18,
+  --   ry = 45.0,
+  --   rz = 93.394,
+  -- },
+-- -- ##### Correct for rows 2-15 need to check for rows 1-2
+--   bottleStartxyz = {
+--     x = 100.000,
+--     y = -544.003,
+--     z = 205, 
+--     rx = 174.723,
+--     ry = 48.665,
+--     rz = 82.174,
+--   },
+  -- Base bottle orientation (separate these so row16 can differ)
+  bottleOri_1_15 = { rx = 174.723, ry = 48.665, rz = 82.174 },
+  bottleOri_16   = { rx = 173.868, ry = 44.705, rz = 114.688 },
+
+
+  -- -- Spacing between bottles (mm) this will no longer be necessary!!!!
+  -- spacing = {
+  --   d_x = 58,       -- between bottles
+  --   d_y = 1.5,
+  --   d_x_last = 29,  -- end of row correction
+  --   d_y_last = 16,  -- end of row correction (y)
+  -- },
 
   -- Wait time (ms) at filler
   filler_wait_ms = 3000,
 
-  -- Tray layout
-  cols = 6,
-  rows = 1,
+  -- -- Tray layout
+  -- cols = 6,
+  -- rows = 1,
 
   -- Inverse-kinematics seed / config
   joint_seed = -1,
@@ -155,17 +171,17 @@ local par = {
 -- functions.lua (inline or required)
 local F = {}
 
-local unpack = table.unpack or unpack
-
-
+-- no longer being used but it might be necessary since the points need to be saved with x=point.x, y=point.y,....
+-- local unpack = table.unpack or unpack
 
 -- Require that a table has certain non-nil keys; raises a clear error if not.
 local function require_keys(t, keys, where)
   for i = 1, #keys do
     local k = keys[i]
-    -- if t[k] == nil then
-    --   error((where or "table") .. " missing key: '" .. k .. "'")
-    -- end
+    -- comment this out if there are errors but it's a safeguard to get the robot to stop if anything is missing
+    if t[k] == nil then
+      error((where or "table") .. " missing key: '" .. k .. "'")
+    end
   end
 end
 
@@ -191,14 +207,16 @@ function moveL_point(p)
     p.offset_rx, p.offset_ry, p.offset_rz
   )
 end
--- shallow copy
-local function copy_table(t)
-  local out = {}
-  if t then
-    for key, value in pairs(t) do out[key] = value end
-  end
-  return out
-end
+
+-- no longer being used but it might be necessary since the points need to be saved with x=point.x, y=point.y,....
+-- -- shallow copy
+-- local function copy_table(t)
+--   local out = {}
+--   if t then
+--     for key, value in pairs(t) do out[key] = value end
+--   end
+--   return out
+-- end
 
 -- shallow merge: source -> destination
 local function merge(destination, source)
@@ -225,11 +243,10 @@ end
 
 -- Start at home, rotate, power gripper, open to start gap
 function F.startup(home_initial, home_rotate45)
-  -- If your WebApp’s Lin expects a pose table, these are OK:
-  Lin(home_initial, 25, -1, 0, 0)
-  Lin(home_rotate45, 25, -1, 0, 0)
+  Lin(home_initial, par.lin_speed, -1, 0, 0)
+  Lin(home_rotate45, par.lin_speed, -1, 0, 0)
   ActGripper(1, 1)
-  MoveGripper(1, 27, 25, 17, 5000, 0, 0, 0, 0, 0)
+  MoveGripper(1, par.grip_Open, par.lin_speed, 17, 5000, 0, 0, 0, 0, 0)
 end
 
 -- Approach bottle, grab, lift
@@ -237,43 +254,36 @@ function F.bottle_approach_grab(bottle_approach, bottle_btw, bottle_grab)
     moveL_point(bottle_approach)
     moveL_point(bottle_btw)
     moveL_point(bottle_grab)
-    -- MoveGripper(1, 4, 25, 17, 5000, 0, 0, 0, 0, 0)
-    WaitMs(par.gripper_wait_ms)          -- <<< add this single line
+    -- MoveGripper(1, par.grip_Close, par.lin_speed, 17, 5000, 0, 0, 0, 0, 0)
+    WaitMs(par.gripper_wait_ms)          
     moveL_point(bottle_btw)
     moveL_point(bottle_approach)
 end
 
 function F.filler(filler_under_approach, filler_edge, filler_insert, filler_wait_ms)
-  Lin(filler_under_approach, 25, -1, 0, 0)
-  Lin(filler_edge, 25, -1, 0, 0)
-  Lin(filler_insert, 25, -1, 0, 0)
+  Lin(filler_under_approach, par.lin_speed, -1, 0, 0)
+  Lin(filler_edge, par.lin_speed, -1, 0, 0)
+  Lin(filler_insert, par.lin_speed, -1, 0, 0)
   WaitMs(filler_wait_ms)           -- ms
-  Lin(filler_edge, 25, -1, 0, 0)
-  Lin(filler_under_approach, 25, -1, 0, 0)
+  Lin(filler_edge, par.lin_speed, -1, 0, 0) 
+  Lin(filler_under_approach, par.lin_speed, -1, 0, 0)
 end
 
-function F.bottle_return_release(bottle_approach, bottle_grab)
+function F.bottle_return_release(bottle_approach, bottle_btw, bottle_grab)
     moveL_point(bottle_approach)
+    moveL_point(bottle_btw)
     moveL_point(bottle_grab)
-    MoveGripper(1, 27, 25, 17, 5000, 0, 0, 0, 0, 0)
-    WaitMs(par.gripper_wait_ms)          -- <<< add this single line
+    MoveGripper(1, par.grip_Open, par.lin_speed, 17, 5000, 0, 0, 0, 0, 0)
+    WaitMs(par.gripper_wait_ms)          
+    moveL_point(bottle_btw)
     moveL_point(bottle_approach)
 end
 
 function F.shutdown(home_initial)
-  Lin(home_initial, 25, -1, 0, 0)
-  MoveGripper(1, 100, 25, 17, 5000, 0, 0, 0, 0, 0)
+  Lin(home_initial, par.lin_speed, -1, 0, 0)
+  MoveGripper(1, 100, par.lin_speed, 17, 5000, 0, 0, 0, 0, 0)
   ActGripper(1, 0)
 end
---------------------------------------------------------------
-
--- -- Required files 
--- local F = require('functions') -- movement functions file
--- local P = require('points')    -- fixed points & repeated
--- local par = require('params')  -- parameters
-
-------- Startup Commands
-
 
 --------------------------------------------------------------
 -------------------- Combined Runner -------------------------
@@ -292,9 +302,10 @@ local DO_RETURN_RELEASE = true
 local ROW16_START_BOTTLE_ID = 84
 
 -- Z levels (keep these distinct; your old params table overwrote these)
-local Z_1_15 = { approach = 205.0, btw = 165.0, grab = 133.5 }
-local Z_16   = { approach = 205.0, btw = 165.0, grab = 140.5 }
+local Z_1_15 = { approach = 205.0, btw = 160.0, grab = 133.5 }
+local Z_16   = { approach = 205.0, btw = 160.0, grab = 140.5 }
 
+-- ########## Double check that these points are all correct!!!!!!###########################
 -- Row definitions from your data_points.txt
 local ROWS = {
   [1] = { start_x = 137.5, start_y = -296.5, dx_steps = {58.0, 58.0, 58.0, 58.0, 58.0}, dy_steps = {1.5, 1.5, 1.5, 1.5, 1.5}, new_row_dx = 29.0, new_row_dy = 16.0, bottles = 6 },
@@ -312,15 +323,14 @@ local ROWS = {
   [13] = { start_x = 132.5, start_y = -496.5, dx_steps = {56.5, 58.0, 58.0, 57.5, 57.0}, dy_steps = {1.5, 2.0, 0.5, 1.0, 2.0}, new_row_dx = 28.5, new_row_dy = 18.0, bottles = 6 },
   [14] = { start_x = -126.0, start_y = -507.5, dx_steps = {57.5, 57.5, 57.5, 57.5}, dy_steps = {0.5, 1.5, 1.0, 1.5}, new_row_dx = 27.5, new_row_dy = 16.5, bottles = 5 },
   [15] = { start_x = 131.5, start_y = -528.5, dx_steps = {56.5, 58.0, 57.5, 57.5, 57.0}, dy_steps = {1.5, 1.0, 0.5, 1.0, 2.0}, new_row_dx = 28.5, new_row_dy = 18.0, bottles = 6 },
-  [16] = { start_x = -126.5, start_y = -540.5, dx_steps = {55.0, 4.0, 56.47, 80.97}, dy_steps = {1.5, 24.5, 1.75, 24.25} },
+  [16] = { start_x = -126.5, start_y = -540.5, dx_steps = {55.0, 4.0, 56.47, 80.97}, dy_steps = {1.5, 24.5, 1.75, 24.25},bottles = 5 },
 }
-
 
 -- Bottle-specific overrides (fill rx/ry/rz for 86 and 87 once you teach them)
 local OVERRIDE = {
-  [80] = { x = -47.0,  y = -549.5,  rx = nil, ry = nil, rz = nil }, -- optional
-  [86] = { x = -75.5,  y = -566.5,  rx = nil, ry = nil, rz = nil },
-  [87] = { x = -19.03, y = -568.25, rx = nil, ry = nil, rz = nil },
+  -- [80] = { x = -47.0,  y = -549.5,  rx = 173.868, ry = 44.705, rz = 114.688 }, -- optional
+  [86] = { x = -75.5,  y = -566.5,  rx = 173.868, ry = 44.705, rz = 114.688 },
+  [87] = { x = -19.03, y = -568.25, rx = 173.868, ry = 44.705, rz = 114.688 },
 }
 
 -- Compute bottle id ranges per row
@@ -343,8 +353,8 @@ local function bottle_id_for(r, c)
   return ROW_START_ID[r] + (c - 1)
 end
 
--- Build the nominal XY for a given row/col using your per-step dx/dy.
--- Direction convention (matches your existing code):
+-- Build the nominal XY for a given row/col using per-step dx/dy.
+-- Direction convention:
 --   odd rows: x -= dx, y += dy
 --   even rows: x += dx, y -= dy
 local function xy_for(r, c)
@@ -370,16 +380,17 @@ end
 local function pose_xyz_for_bottle(r, c, z)
   local id = bottle_id_for(r, c)
   local x, y = xy_for(r, c)
-  local rx = par.bottleStartxyz.rx
-  local ry = par.bottleStartxyz.ry
-  local rz = par.bottleStartxyz.rz
 
-  if OVERRIDE[id] then
-    if OVERRIDE[id].x ~= nil then x = OVERRIDE[id].x end
-    if OVERRIDE[id].y ~= nil then y = OVERRIDE[id].y end
-    if OVERRIDE[id].rx ~= nil then rx = OVERRIDE[id].rx end
-    if OVERRIDE[id].ry ~= nil then ry = OVERRIDE[id].ry end
-    if OVERRIDE[id].rz ~= nil then rz = OVERRIDE[id].rz end
+  local ori = (r == 16) and par.bottleOri_16 or par.bottleOri_1_15
+  local rx, ry, rz = ori.rx, ori.ry, ori.rz
+
+  local o = OVERRIDE[id]
+  if o then
+    if o.x ~= nil then x = o.x end
+    if o.y ~= nil then y = o.y end
+    if o.rx ~= nil then rx = o.rx end
+    if o.ry ~= nil then ry = o.ry end
+    if o.rz ~= nil then rz = o.rz end
   end
 
   return { x=x, y=y, z=z, rx=rx, ry=ry, rz=rz }, id
@@ -387,22 +398,20 @@ end
 
 local function do_one_bottle(r, c)
   local Z = (r == 16) and Z_16 or Z_1_15
-
-  local xyz_a, id_a = pose_xyz_for_bottle(r, c, Z.approach)
-  local xyz_g, _    = pose_xyz_for_bottle(r, c, Z.grab)
+  
+  local xyz_a, id = pose_xyz_for_bottle(r, c, Z.approach)
+  local xyz_b, _  = pose_xyz_for_bottle(r, c, Z.btw)
+  local xyz_g, _  = pose_xyz_for_bottle(r, c, Z.grab)
 
   local joints_a = F.convertPoint(xyz_a, par.joint_seed)
+  local joints_b = F.convertPoint(xyz_b, par.joint_seed)
   local joints_g = F.convertPoint(xyz_g, par.joint_seed)
 
   local bottle_approach = F.createPoint(xyz_a, joints_a, par.bottle_params)
+  local bottle_btw      = F.createPoint(xyz_b, joints_b, par.bottle_params)
   local bottle_grab     = F.createPoint(xyz_g, joints_g, par.bottle_params)
 
-  -- Special “rotate/clearance” hook (only if you define a taught pose)
-  if (id_a == 86 or id_a == 87) and P.row16_rotate_clearance then
-    Lin(P.row16_rotate_clearance, 25, -1, 0, 0)
-  end
-
-  F.bottle_approach_grab(bottle_approach, bottle_grab)
+  F.bottle_approach_grab(bottle_approach, bottle_btw, bottle_grab)
 
   if DO_FILLER then
     if r == 16 then
@@ -413,13 +422,12 @@ local function do_one_bottle(r, c)
   end
 
   if DO_RETURN_RELEASE then
-    F.bottle_return_release(bottle_approach, bottle_grab)
+    F.bottle_return_release(bottle_approach, bottle_btw, bottle_grab)
   end
 end
 
 local function run_row(r, start_col, end_col)
-  local ncols
-  if r == 16 then ncols = 5 else ncols = ROWS[r].bottles end
+  local ncols = ROWS[r].bottles
   start_col = start_col or 1
   end_col   = end_col or ncols
   for c=start_col, end_col do
