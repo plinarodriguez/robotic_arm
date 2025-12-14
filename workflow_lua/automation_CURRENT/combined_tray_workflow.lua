@@ -293,12 +293,23 @@ end
 --   "ROWS_1_15"  -> run rows 1..15 then home
 --   "ROW_16"     -> run row 16 (with special handling for bottles 86/87)
 --   "ONE_ROW"    -> to test a single row but needs: ROW_TO_RUN,START_COL,END_COL
-local RUN_MODE = "ONE_ROW"
+--   "ONE_BOTTLE" -> to test 1 bottle only 
+--   "ROWS_RANGE" -> to test rows 1 - 2 for example 
+local RUN_MODE = "ONE_BOTTLE"
+
+-- For ONE_BOTTLE:
+local ONE_BOTTLE_ROW = 1
+local ONE_BOTTLE_COL = 1
 
 -- For ONE_ROW:
 local ROW_TO_RUN = 3          -- <- set row number here (1..16)
 local START_COL  = 1          -- <- optional
 local END_COL    = nil        -- <- nil means “to end of row”
+
+-- For multiple rows
+local RUN_MODE = "ROWS_RANGE"
+local ROW_START = 1
+local ROW_END   = 5
 
 -- Optional controls
 local DO_FILLER = true
@@ -455,6 +466,12 @@ local function run_row_16_from_bottle(start_id)
   run_row(16, col, 5)
 end
 
+local function run_rows_range(r_start, r_end)
+  for r = r_start, r_end do
+    run_row(r, 1, nil)
+  end
+end
+
 --------------------------------------------------------------
 ------------------------- Execute -----------------------------
 --------------------------------------------------------------
@@ -474,6 +491,14 @@ elseif RUN_MODE == "ONE_ROW" then
   local ncols = ROWS[r].bottles
   local endc = END_COL or ncols
   run_row(r, START_COL, endc)
+  F.shutdown(P.home_initial)
+
+elseif RUN_MODE == "ONE_BOTTLE" then
+  do_one_bottle(ONE_BOTTLE_ROW, ONE_BOTTLE_COL)
+  F.shutdown(P.home_initial)
+
+elseif RUN_MODE == "ROWS_RANGE" then
+  run_rows_range(ROW_START, ROW_END)
   F.shutdown(P.home_initial)
 
 else
