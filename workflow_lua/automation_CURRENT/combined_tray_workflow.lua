@@ -324,22 +324,22 @@ local Z_16   = { approach = 205.0, btw = 160.0, grab = 140.5 }
 -- ########## Double check that these points are all correct!!!!!!###########################
 -- Row definitions from your data_points.txt
 local ROWS = {
-  [1] = { start_x = 137.5, start_y = -296.5, dx_steps = {58.0, 58.0, 58.0, 58.0, 58.0}, dy_steps = {1.5, 1.5, 1.5, 1.5, 1.5}, new_row_dx = 29.0, new_row_dy = 16.0, bottles = 6 },
-  [2] = { start_x = -121.0, start_y = -296.5, dx_steps = {58.0, 58.0, 58.0, 58.0}, dy_steps = {1.5, 1.5, 1.5, 1.5}, new_row_dx = 29.0, new_row_dy = 16.0, bottles = 5 },
-  [3] = { start_x = 136.5, start_y = -330.5, dx_steps = {57.0, 57.5, 57.0, 58.0, 57.5}, dy_steps = {0.0, 2.0, 1.0, 1.5, 2.0}, new_row_dx = 28.5, new_row_dy = 17.0, bottles = 6 },
-  [4] = { start_x = -122.0, start_y = -341.0, dx_steps = {58.0, 57.5, 57.0, 57.5}, dy_steps = {1.5, 2.5, 0.5, 1.5}, new_row_dx = 28.0, new_row_dy = 16.0, bottles = 5 },
-  [5] = { start_x = 136.0, start_y = -363.0, dx_steps = {56.5, 58.0, 57.5, 58.0, 57.5}, dy_steps = {0.0, 1.5, 1.0, 1.5, 2.0}, new_row_dx = 24.5, new_row_dy = 17.0, bottles = 6 },
-  [6] = { start_x = -123.5, start_y = -374.5, dx_steps = {57.5, 57.5, 57.5, 58.0}, dy_steps = {2.0, 1.5, 0.5, 1.5}, new_row_dx = 27.5, new_row_dy = 17.0, bottles = 5 },
-  [7] = { start_x = 134.5, start_y = -397.0, dx_steps = {56.5, 58.0, 57.5, 58.0, 57.0}, dy_steps = {0.5, 1.0, 0.5, 1.0, 2.0}, new_row_dx = 28.5, new_row_dy = 17.0, bottles = 6 },
-  [8] = { start_x = -124.0, start_y = -407.0, dx_steps = {57.0, 57.5, 58.5, 57.5}, dy_steps = {2.0, 1.5, 1.5, 1.5}, new_row_dx = 27.5, new_row_dy = 16.5, bottles = 5 },
-  [9] = { start_x = 134.0, start_y = -430.0, dx_steps = {56.5, 58.0, 58.0, 58.0, 57.0}, dy_steps = {0.5, 1.0, 2.5, 1.0, 2.0}, new_row_dx = 28.5, new_row_dy = 17.0, bottles = 6 },
-  [10] = { start_x = -125.0, start_y = -440.0, dx_steps = {57.0, 57.5, 58.5, 57.5}, dy_steps = {2.0, 1.5, 1.5, 0.5}, new_row_dx = 27.5, new_row_dy = 17.5, bottles = 5 },
-  [11] = { start_x = 133.0, start_y = -463.0, dx_steps = {56.5, 58.0, 58.0, 57.5, 57.0}, dy_steps = {1.5, 2.0, 0.5, 1.0, 2.0}, new_row_dx = 28.5, new_row_dy = 18.0, bottles = 6 },
-  [12] = { start_x = -125.5, start_y = -474.0, dx_steps = {57.0, 57.5, 58.5, 57.5}, dy_steps = {2.0, 0.0, 1.5, 1.5}, new_row_dx = 27.5, new_row_dy = 17.5, bottles = 5 },
-  [13] = { start_x = 132.5, start_y = -496.5, dx_steps = {56.5, 58.0, 58.0, 57.5, 57.0}, dy_steps = {1.5, 2.0, 0.5, 1.0, 2.0}, new_row_dx = 28.5, new_row_dy = 18.0, bottles = 6 },
-  [14] = { start_x = -126.0, start_y = -507.5, dx_steps = {57.5, 57.5, 57.5, 57.5}, dy_steps = {0.5, 1.5, 1.0, 1.5}, new_row_dx = 27.5, new_row_dy = 16.5, bottles = 5 },
-  [15] = { start_x = 131.5, start_y = -528.5, dx_steps = {56.5, 58.0, 57.5, 57.5, 57.0}, dy_steps = {1.5, 1.0, 0.5, 1.0, 2.0}, new_row_dx = 28.5, new_row_dy = 18.0, bottles = 6 },
-  [16] = { start_x = -126.5, start_y = -540.5, dx_steps = {55.0, 4.0, 56.47, 80.97}, dy_steps = {1.5, 24.5, 1.75, 24.25},bottles = 5 },
+  [1] = { start_x = 136, start_y = -296.5,    dx_steps = {57.5, 55.5, 59.0, 56.5, 58.0}, dy_steps = {0.5, 1.0, 0.5, 2.0, 1.0}, bottles = 6 },
+  [2] = { start_x = -122.5, start_y = -309.0, dx_steps = {57.5, 57.5, 57.5, 56.5},       dy_steps = {1.0, 1.0, 2.0, 0.5},      bottles = 5 },
+  [3] = { start_x = 135.5, start_y = -330.5,  dx_steps = {57.5, 57.5, 57.0, 58.0, 57.5}, dy_steps = {0.5, 1.5, 1.0, 1.5, 2.0}, bottles = 6 },
+  [4] = { start_x = -123.5, start_y = -341.0, dx_steps = {58.0, 56.0, 58.5, 57.0},       dy_steps = {1.5, 2.5, 0.5, 1.5},      bottles = 5 },
+  [5] = { start_x = 134.5, start_y = -363.0,  dx_steps = {56.5, 58.0, 57.5, 58.0, 56.5}, dy_steps = {0.5, 1.0, 1.0, 1.5, 2.0}, bottles = 6 },  
+  [6] = { start_x = -123.5, start_y = -374.5, dx_steps = {57.5, 57.5, 57.5, 58.0}, dy_steps = {2.0, 1.5, 0.5, 1.5}, bottles = 5 },
+  [7] = { start_x = 134.5, start_y = -397.0, dx_steps = {56.5, 58.0, 57.5, 58.0, 57.0}, dy_steps = {0.5, 1.0, 2.5, 1.0, 2.0}, bottles = 6 },
+  [8] = { start_x = -124.0, start_y = -407.0, dx_steps = {57.0, 57.5, 58.5, 57.5}, dy_steps = {2.0, 1.5, 1.5, 1.5}, bottles = 5 },
+  [9] = { start_x = 134.0, start_y = -430.0, dx_steps = {56.5, 58.0, 58.0, 58.0, 57.0}, dy_steps = {0.5, 1.0, 2.5, 1.0, 2.0}, bottles = 6 },
+  [10] = { start_x = -125.0, start_y = -440.0, dx_steps = {57.0, 57.5, 58.5, 57.5}, dy_steps = {2.0, 1.5, 1.5, 0.5}, bottles = 5 },
+  [11] = { start_x = 133.0, start_y = -463.0, dx_steps = {56.5, 58.0, 58.0, 57.5, 57.0}, dy_steps = {1.5, 2.0, 0.5, 1.0, 2.0}, bottles = 6 },
+  [12] = { start_x = -125.5, start_y = -474.0, dx_steps = {57.0, 57.5, 58.5, 57.5}, dy_steps = {2.0, 0.0, 1.5, 1.5}, bottles = 5 },
+  [13] = { start_x = 132.5, start_y = -496.5, dx_steps = {56.5, 58.0, 58.0, 57.5, 57.0}, dy_steps = {1.5, 2.0, 0.5, 1.0, 2.0}, bottles = 6 },
+  [14] = { start_x = -126.0, start_y = -507.5, dx_steps = {57.5, 57.5, 57.5, 57.5}, dy_steps = {0.5, 1.5, 1.0, 1.5}, bottles = 5 },
+  [15] = { start_x = 131.5, start_y = -528.5, dx_steps = {56.5, 58.0, 57.5, 57.5, 57.0}, dy_steps = {1.5, 1.0, 0.5, 1.0, 2.0}, bottles = 6 },
+  [16] = { start_x = -126.5, start_y = -540.5, dx_steps = {55.0, -4.0, 56.47, 119.03}, dy_steps = {1.5, 24.5, 1.75, -24.25},bottles = 5 },
 }
 
 -- Bottle-specific overrides (fill rx/ry/rz for 86 and 87 once you teach them)
