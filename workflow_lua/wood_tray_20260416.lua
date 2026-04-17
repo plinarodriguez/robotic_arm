@@ -37,7 +37,7 @@ local par = {
   lin_speed = 35, -- slow=10-15, med=20-30, fast=40-60  Note that chosen speed on the interface is 35% but match that here
 
   -- Gripper orientation 
-  gripperOri = {rx=136.173,ry=89.012,rz=11.265},
+  gripperOri = {rx=141.295, ry=88.99, rz=16.381}, --{rx=136.173,ry=89.012,rz=11.265},
   -- Wait time (ms) at filler
   filler_wait_ms = 3000,
 
@@ -154,7 +154,7 @@ local ROW_START = 1
 local ROW_END   = 1
 
 -- Z levels (approach bottle, right above bottle, insert) 
-local Z_positions = {approach = 160.0, btw = 145, grab = 117} -- 160,155,119might change the btw to 145 to be closer to the neck of the bottle
+local Z_positions = {approach = 160.0, btw = 145.0, grab = 117.0} -- 160,155,119might change the btw to 145 to be closer to the neck of the bottle
 
 -- ########## Double check that these points are all correct!!!!!!###########################
 -- Row definitions from your data_points.txt
