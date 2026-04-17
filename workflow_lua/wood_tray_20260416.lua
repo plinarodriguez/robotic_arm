@@ -5,9 +5,9 @@ local P = {
   -- NOTE: speed/acc here are ignored by Lin(); Lin speed comes from par.lin_speed
   -- Home & startup 
   home_initial = {
-    x=195.012, y=-316.503, z=299.996,
-    rx=136.246, ry=89.013, rz=11.339,
-    j1=119.953, j2=-93.213, j3=119.017, j4=-24.126, j5=154.846, j6=-87.798,
+    x=198.500, y=-315.5, z=300.00,
+    rx=141.295, ry=88.99, rz=16.381,
+    j1=120.565, j2=-78.789, j3=129.202, j4=-48.514, j5=155.463, j6=-87.641,
     e1=0.000, e2=0.000, e3=0.000, e4=0.000,
     speed=100, acc=100, elbow_speed=100, elbow_acc=100,
     toolnum=0, workpiecenum=0,
